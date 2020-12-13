@@ -38,6 +38,16 @@ namespace WebCal.Controllers.Api
         }
 
         [HttpGet]
+        public double Percentage(double value1, double value2)
+        {
+            if (value2 == 0)
+                return 0;
+
+            return (value1 / value2) * 100;
+        }
+
+
+        [HttpGet]
         public string Get()
         {
             return "default";

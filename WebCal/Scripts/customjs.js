@@ -43,22 +43,20 @@
 
     });
 
-    $("input[name = 'result2']").click(function() {
-        var val = $("#inputbox").val();
-        secondvalue = val.substr(val.indexOf(calculation) + 1);
-        $('#outputbox').val(firstvalue + secondvalue + calculation);
-    });
-
 
     $("input[name = 'result']").click(function () {
 
-       
-
         var val = $("#inputbox").val();
-        var value2 = val.substr(val.indexOf(calculation) + 1);
+        secondvalue = val.substr(val.indexOf(calculation) + 1);
+        do_Calc();
+
+    });
+
+    function do_Calc() {
 
         var value1 = firstvalue;
-        
+        var value2 = secondvalue;
+
         var arg = "value1=" + value1 + "&value2=" + value2;
 
         var id = calculation;
@@ -79,6 +77,11 @@
         case '/':
             urlString = urlString + "Divide/?" + arg;
             break;
+
+        case '%':
+            urlString = urlString + "Percentage/?" + arg;
+            break;
+
         default:
             urlString = urlString + "hello";
 
@@ -97,6 +100,7 @@
                 $('#outputbox').val(err.Message);
             }
         });
-    });
+    }
+
 
 });
