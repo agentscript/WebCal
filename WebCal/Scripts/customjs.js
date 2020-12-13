@@ -23,6 +23,14 @@
 
     });
 
+    $("input[name='deci']").click(function (e) {
+        e.preventDefault();
+        var clicked_button = e.originalEvent.explicitOriginalTarget.value;
+        $('#inputbox').val($('#inputbox').val() + clicked_button);
+        
+
+    });
+
 
 
     $("input[name^='del']").click(function (e) {

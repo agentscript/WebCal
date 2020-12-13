@@ -10,27 +10,30 @@ namespace WebCal.Controllers.Api
     public class MathController : ApiController
     {
         [HttpGet]
-        public int Add(int value1, int value2)
+        public double Add(double value1, double value2)
         {
             return value1 + value2;
         }
 
 
         [HttpGet]
-        public int Substract(int value1, int value2)
+        public double Substract(double value1, double value2)
         {
             return value1 - value2;
         }
 
         [HttpGet]
-        public int Multiply(int value1, int value2)
+        public double Multiply(double value1, double value2)
         {
             return value1 * value2;
         }
 
         [HttpGet]
-        public int Divide(int value1, int value2)
+        public double Divide(double value1, double value2)
         {
+            if (value2 == 0)
+                return 0;
+
             return value1 / value2;
         }
 
