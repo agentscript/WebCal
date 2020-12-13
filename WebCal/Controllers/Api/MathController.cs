@@ -43,7 +43,7 @@ namespace WebCal.Controllers.Api
             if (value2 == 0)
                 return 0;
 
-            return (value1 / value2) * 100;
+            return (value1 / 100) * value2;
         }
 
 
