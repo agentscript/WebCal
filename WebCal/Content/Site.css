@@ -91,6 +91,11 @@ span {
     color: #fff;
 }
 
+#bs {
+    background: orange;
+    color: #fff;
+}
+
 #plus {
     height: 97px;
 }

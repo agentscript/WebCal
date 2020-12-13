@@ -16,6 +16,8 @@ namespace WebCal
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
                 "~/Scripts/customjs.js"));
 
+           // bundles.Add(new ScriptBundle("~/bundles/custom").Include(
+            //    "~/Scripts/calc.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.

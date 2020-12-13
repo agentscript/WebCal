@@ -3,35 +3,58 @@
     var firstvalue = 0;
     var secondvalue = 0;
     var calculation = 0;
+    var total = 0;
     
 
     $("input[name^='dg']").click(function (e) {
         e.preventDefault();
         var clicked_button = e.originalEvent.explicitOriginalTarget.value;
+        UpdateValue(clicked_button);
+    });
+
+    $("input[name='bs']").click(function (e) {
+        e.preventDefault();
+        var clicked_button = e.originalEvent.explicitOriginalTarget.value;
         console.log(clicked_button);
-        $('#inputbox').val($('#inputbox').val() + clicked_button);
+        $('#inputbox').val($('#inputbox').val().slice(0,-1));
     });
 
 
-    $("input[name^='cal_']").click(function(e) {
-        e.preventDefault();
-        firstvalue = $('#inputbox').val();
-        calculation = e.originalEvent.explicitOriginalTarget.value;
-        console.log(calculation);
+    $("input[name^='cal_']").click(function (e) {
+        if (calculation == '0') {
+            e.preventDefault();
+            calculation = e.originalEvent.explicitOriginalTarget.value;
+            //console.log(calculation);
+            update_InputBox(calculation);
+        } else {
+            do_Calc();
+            firstvalue = total;
+            secondvalue = 0;
+            calculation = e.originalEvent.explicitOriginalTarget.value;
+            update_InputBox(calculation);
+           
+        }
 
-        $('#inputbox').val($('#inputbox').val() + calculation);
 
     });
 
     $("input[name='deci']").click(function (e) {
-        e.preventDefault();
-        var clicked_button = e.originalEvent.explicitOriginalTarget.value;
-        $('#inputbox').val($('#inputbox').val() + clicked_button);
+        if (calculation == 0) {
+            if (firstvalue.indexOf(".") <= 0) {
+                updateFirst(".");
+                update_InputBox(".");
+            }
+
+        } else {
+            if (secondvalue.indexOf(".") <= 0) {
+                updateSec(".");
+                update_InputBox(".");
+            }
+           
+        }
         
 
     });
-
-
 
     $("input[name^='del']").click(function (e) {
         e.preventDefault();
@@ -39,26 +62,49 @@
         $('#outputbox').val('');
          firstvalue = 0;
          secondvalue = 0;
-         calculation = 0;
+        calculation = 0;
+        total = 0;
+        result = 0;
 
     });
 
 
     $("input[name = 'result']").click(function () {
 
-        var val = $("#inputbox").val();
-        secondvalue = val.substr(val.indexOf(calculation) + 1);
+       
         do_Calc();
 
     });
+
+
+    function UpdateValue(value)
+    {
+        if (calculation == 0) {
+            updateFirst(value);
+        } else {
+            updateSec(value);
+        }
+        update_InputBox(value);
+    }
+
+
+    function updateFirst(val1) {
+        firstvalue = firstvalue + val1;
+    }
+
+    function updateSec(val2) {
+        secondvalue = secondvalue + val2;
+    }
+
+    function update_InputBox(disp) {
+        $('#inputbox').val($('#inputbox').val() + disp);
+    }
 
     function do_Calc() {
 
         var value1 = firstvalue;
         var value2 = secondvalue;
-
         var arg = "value1=" + value1 + "&value2=" + value2;
-
         var id = calculation;
 
         //var urlString = "http://localhost:57633/api/math/";
@@ -90,8 +136,10 @@
         $.ajax({
             url: urlString,
             type: "GET",
+            async: false,
             dataType: 'json',
             success: function (result) {
+                total = result;
                 $('#outputbox').val(result);
 
             },

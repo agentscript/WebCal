@@ -4,28 +4,48 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web;
 
 namespace WebCal.Controllers.Api
 {
     public class MathController : ApiController
     {
+
+        public MathController()
+        {
+            string s = GetIP();
+            Console.WriteLine(s);
+        }
+
+        public String GetIP()
+        {
+            string ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (string.IsNullOrEmpty(ip))
+            {
+                ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+            }
+
+            return ip;
+        }
+
+
         [HttpGet]
         public double Add(double value1, double value2)
         {
-            return value1 + value2;
+            return Math.Round(value1 + value2,4);
         }
 
 
         [HttpGet]
         public double Substract(double value1, double value2)
         {
-            return value1 - value2;
+            return Math.Round(value1 - value2,4);
         }
 
         [HttpGet]
         public double Multiply(double value1, double value2)
         {
-            return value1 * value2;
+            return Math.Round(value1 * value2,4);
         }
 
         [HttpGet]
@@ -34,7 +54,7 @@ namespace WebCal.Controllers.Api
             if (value2 == 0)
                 return 0;
 
-            return value1 / value2;
+            return Math.Round(value1 / value2,4);
         }
 
         [HttpGet]
@@ -42,8 +62,9 @@ namespace WebCal.Controllers.Api
         {
             if (value2 == 0)
                 return 0;
+            double percentage = (value1 / 100) * value2;
 
-            return (value1 / 100) * value2;
+            return Math.Round(percentage,4);
         }
 
 
