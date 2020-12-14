@@ -1,4 +1,4 @@
 # WebCal
 No keyboard entries. click to to enter values
-Continious calculatios allowed
+Continious calculations allowed
 
