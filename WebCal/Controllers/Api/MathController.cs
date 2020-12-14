@@ -65,7 +65,7 @@ namespace WebCal.Controllers.Api
         public IHttpActionResult Divide(double value1, double value2)
         {
             if (value2 == 0)
-                return BadRequest("Err: Divide by Zero");
+                return BadRequest("400: Divide by Zero");
 
             return Ok(Math.Round(value1 / value2,4));
         }
@@ -74,7 +74,7 @@ namespace WebCal.Controllers.Api
         public IHttpActionResult Percentage(double value1, double value2)
         {
             if (value2 == 0)
-                return BadRequest("Err: Divide by Zero");
+                return BadRequest("400: Divide by Zero");
             double percentage = (value1 / 100) * value2;
 
             return Ok(Math.Round(percentage,4));

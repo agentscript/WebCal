@@ -57,7 +57,7 @@
             if (calculation == 0) {
                 calculation = 'sqrt';
                 do_Calc();
-                calculation = e.originalEvent.explicitOriginalTarget.value;
+                calculation = e.originalEvent.explicitOriginalTarget.name;
                 update_InputBox(calculation);
                
             } else {
@@ -67,7 +67,7 @@
                 secondvalue = 0;
                 calculation = 'sqrt';
                 do_Calc();
-                calculation = e.originalEvent.explicitOriginalTarget.value;
+                calculation = e.originalEvent.explicitOriginalTarget.name;
                 update_InputBox(calculation);
             }
 
@@ -125,7 +125,7 @@
         calculation = 0;
         total = 0;
         result = 0;
-        notlastsign = 1;
+        notlastsign = 0;
 
     });
 
