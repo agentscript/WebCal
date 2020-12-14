@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web;
+using System.Web.Mvc;
 using WebCal.Models;
 
 namespace WebCal.Controllers.Api
@@ -41,47 +42,54 @@ namespace WebCal.Controllers.Api
             return ip;
         }
 
-
-        [HttpGet]
-        public double Add(double value1, double value2)
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult Add(double value1, double value2)
         {
-            return Math.Round(value1 + value2,4);
+            return Ok(Math.Round(value1 + value2,4));
         }
 
 
-        [HttpGet]
-        public double Substract(double value1, double value2)
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult Substract(double value1, double value2)
         {
-            return Math.Round(value1 - value2,4);
+            return Ok(Math.Round(value1 - value2,4));
         }
 
-        [HttpGet]
-        public double Multiply(double value1, double value2)
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult Multiply(double value1, double value2)
         {
-            return Math.Round(value1 * value2,4);
+            return Ok(Math.Round(value1 * value2,4));
         }
 
-        [HttpGet]
-        public double Divide(double value1, double value2)
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult Divide(double value1, double value2)
         {
             if (value2 == 0)
-                return 0;
+                return BadRequest("Err: Divide by Zero");
 
-            return Math.Round(value1 / value2,4);
+            return Ok(Math.Round(value1 / value2,4));
         }
 
-        [HttpGet]
-        public double Percentage(double value1, double value2)
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult Percentage(double value1, double value2)
         {
             if (value2 == 0)
-                return 0;
+                return BadRequest("Err: Divide by Zero");
             double percentage = (value1 / 100) * value2;
 
-            return Math.Round(percentage,4);
+            return Ok(Math.Round(percentage,4));
+        }
+
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult SqRoot(double value1, double value2)
+        {
+            
+            double sqrt = (Math.Sqrt(value1));
+
+            return Ok(Math.Round(sqrt, 4));
         }
 
 
-        [HttpGet]
         public string Get()
         {
             return "default";

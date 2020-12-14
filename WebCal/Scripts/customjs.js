@@ -4,41 +4,101 @@
     var secondvalue = 0;
     var calculation = 0;
     var total = 0;
+    var notlastsign = 1;
     
 
+    //Manual Inputs
+    $('#inputbox').keyup(function(e) {
+        
+        if (operator == 0) {
+            firstvalue = $('#inputbox').val;
+        }
+    });
+
+
+
+
+
+    //clicker Events 
     $("input[name^='dg']").click(function (e) {
         e.preventDefault();
         var clicked_button = e.originalEvent.explicitOriginalTarget.value;
         UpdateValue(clicked_button);
+        notlastsign = 0;
     });
 
     $("input[name='bs']").click(function (e) {
         e.preventDefault();
         var clicked_button = e.originalEvent.explicitOriginalTarget.value;
         console.log(clicked_button);
-        $('#inputbox').val($('#inputbox').val().slice(0,-1));
+        $('#inputbox').val($('#inputbox').val().slice(0, -1));
+        if (calculation == 0) {
+            firstvalue = firstvalue.slice(0, -1);
+            
+        } else if (calculation != 0 && secondvalue == 0) {
+            calculation = 0;
+            notlastsign = 0;
+                    } else {
+            secondvalue = secondvalue.slice(0, -1);
+            if (secondvalue == 0) {
+                notlastsign = 1;
+            }
+
+        }
+
+      
+
+
     });
 
+    $("input[name='sqrt']").click(function(e) {
+        if (notlastsign == 0) {
+
+            if (calculation == 0) {
+                calculation = 'sqrt';
+                do_Calc();
+                calculation = e.originalEvent.explicitOriginalTarget.value;
+                update_InputBox(calculation);
+               
+            } else {
+                
+                do_Calc();
+                firstvalue = total;
+                secondvalue = 0;
+                calculation = 'sqrt';
+                do_Calc();
+                calculation = e.originalEvent.explicitOriginalTarget.value;
+                update_InputBox(calculation);
+            }
+
+        }
+
+    });
 
     $("input[name^='cal_']").click(function (e) {
-        if (calculation == '0') {
-            e.preventDefault();
-            calculation = e.originalEvent.explicitOriginalTarget.value;
-            //console.log(calculation);
-            update_InputBox(calculation);
-        } else {
-            do_Calc();
-            firstvalue = total;
-            secondvalue = 0;
-            calculation = e.originalEvent.explicitOriginalTarget.value;
-            update_InputBox(calculation);
-           
+        if (notlastsign==0) {
+            if (calculation == '0') {
+                e.preventDefault();
+                calculation = e.originalEvent.explicitOriginalTarget.value;
+                notlastsign = 1;
+                //console.log(calculation);
+                update_InputBox(calculation);
+            } else {
+                notlastsign = 1;
+                do_Calc();
+                firstvalue = total;
+                secondvalue = 0;
+                calculation = e.originalEvent.explicitOriginalTarget.value;
+                update_InputBox(calculation);
+
+            }
         }
 
 
     });
 
     $("input[name='deci']").click(function (e) {
+        notlastsign = 1;
         if (calculation == 0) {
             if (firstvalue.indexOf(".") <= 0) {
                 updateFirst(".");
@@ -65,15 +125,13 @@
         calculation = 0;
         total = 0;
         result = 0;
+        notlastsign = 1;
 
     });
 
 
     $("input[name = 'result']").click(function () {
-
-       
         do_Calc();
-
     });
 
 
@@ -126,7 +184,11 @@
 
         case '%':
             urlString = urlString + "Percentage/?" + arg;
+                break;
+        case 'sqrt':
+            urlString = urlString + "SqRoot/?" + arg;
             break;
+
 
         default:
             urlString = urlString + "hello";
